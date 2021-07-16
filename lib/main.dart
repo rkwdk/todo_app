@@ -1,9 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'main_model.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(ProviderScope(child: MyApp()));
 }
 
@@ -18,15 +21,13 @@ class MyApp extends ConsumerWidget {
         appBar: AppBar(
           title: Text("TODOアプリ"),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'You have pushed the button this many times:',
+        body: ListView(
+          children: <Widget>[
+            for (var todo in vm.todoList)
+              ListTile(
+                title: Text('${todo.title}'),
               ),
-            ],
-          ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
