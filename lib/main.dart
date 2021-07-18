@@ -25,7 +25,7 @@ class MyApp extends ConsumerWidget {
           children: <Widget>[
             for (var todo in vm.todoList)
               ListTile(
-                title: Text('${todo.title}'),
+                title: Text('${todo.title} ${todo.createdAt}'),
               ),
           ],
         ),
