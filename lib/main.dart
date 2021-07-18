@@ -43,6 +43,7 @@ class MainPage extends ConsumerWidget {
             context,
             MaterialPageRoute(
               builder: (context) => AddPage(),
+              fullscreenDialog: true,
             ),
           );
         },

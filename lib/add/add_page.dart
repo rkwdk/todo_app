@@ -6,19 +6,33 @@ class AddPage extends ConsumerWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final vm = watch(addModelProvider);
+    final vm = context.read(addModelProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text("TODOアプリ"),
+        title: Text("新規追加"),
       ),
-      body: Column(
-        children: [
-          TextField(),
-          ElevatedButton(
-            onPressed: () {},
-            child: null,
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                hintText: "追加するTODO",
+              ),
+              onChanged: (text) {
+                vm.todoText = text;
+              },
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              child: Text("追加する"),
+              onPressed: () async {
+                await vm.add();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
