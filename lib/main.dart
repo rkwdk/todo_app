@@ -25,15 +25,35 @@ class MainPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, watch) {
     final vm = watch(mainModelProvider);
+    final isActivate = vm.checkShouldActiveCompleteButton();
     return Scaffold(
       appBar: AppBar(
         title: Text("TODOアプリ"),
+        actions: [
+          TextButton(
+              onPressed: isActivate
+                  ? () {
+                      vm.deleteCheckedItems();
+                    }
+                  : null,
+              child: Text(
+                "完了",
+                style: TextStyle(
+                    color: isActivate
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.5)),
+              ))
+        ],
       ),
       body: ListView(
         children: <Widget>[
           for (var todo in vm.todoList)
-            ListTile(
-              title: Text('${todo.title} ${todo.createdAt}'),
+            CheckboxListTile(
+              title: Text('${todo.title}'),
+              value: todo.isDone,
+              onChanged: (bool isDone) {
+                vm.updateDone(todo, isDone);
+              },
             ),
         ],
       ),
